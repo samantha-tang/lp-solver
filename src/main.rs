@@ -1,16 +1,19 @@
 mod simplex;
-pub mod helper;
+pub mod problem;
 
-use helper::{Problem, Matrix, Variable, VarType}
+use problem::{Problem, ConstraintSet, Variable, Matrix, VarType};
 
 
 fn main() {
-    let problem = Problem {
+    let constraints = ConstraintSet {
         A: Matrix { m: 4, n: 2, data: vec![4,1,1,1,-1,0,0,-1] },
         b: vec![8,4,0,0],
-        c: vec![2,1],
-        vars: vec![Variable { vartype: VarType::Continuous, value: None }],
     };
+    let vars = vec![
+            Variable { vartype: VarType::Continuous, value: None },
+            Variable { vartype: VarType::Continuous, value: None },
+        ];
+    let problem = Problem { c: vec![2,1], constraints, vars };
 
-    problem.assert();
+    println!("{:?}", problem.assert());
 }
